@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/945d66df84.js" crossorigin="anonymous"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
@@ -11,6 +12,9 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	
 </head>
+
+
+
 <body>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
@@ -18,7 +22,9 @@
 		<ul>
 			<li><a href="../index.html">projets</a></li>
 			<li>contact</li>
-			<li><a href="./assets/login.html" id="id_login">login</a></li>
+			<li><a href="./assets/login.html">
+				<li class="js-alredy-logged">login</li>
+			</a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -27,6 +33,15 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<a href="#modal1" class="js-modal">modifier</a>
+				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
+					<div class="modal-wrapper js-modal-stop">
+						<a href="#modale" class="js-modal-close">
+							<i class="fas fa-times"></i>
+						</a>
+						<h3 id="titlemodal">Galerie Photo</h3>
+					</div>
+				</aside>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -36,12 +51,26 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-
+		<div class="header">
+			<h2>Mes Projets</h2>
+			<a href="#modal1" class="js-modal">modifier</a>
+				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
+					<div class="modal-wrapper">
+						<h3 id="titlemodal">Galerie Photo</h3>
+							<div class="js-admin-projets">
+								<div class="image-gallery"></div>
+							</div>
+						<a href="modalProjet" class="js-admin-projets">Ajouter un projet</a>
+						<a class="btn-clear-admin" href="#">Supprimer la galerie</a>
+					</div>
+				</aside>
+		</div>
+		
 		<div class="category-buttons">
 		</div>
 		<div class="title_mes_projects">
 		</div>
+		
 		<div class="gallery">
 		</div>
 	</section>
@@ -68,5 +97,7 @@
 	</nav>
 </footer>
 <script src="./assets/index.js"></script>
+
+</div>
 </body>
 </html>

@@ -1,16 +1,17 @@
 //cette fonction sera exécuté lorsque le DOM de la page sera entièrement chargé.
-document.addEventListener('DOMContentLoaded', function() {
+
     const loginForm = document.querySelector('form');
 
     //Lorsque l'utilisateur soumet le formulaire en cliquant sur le bouton de connexion, cet événement est capturé.
     loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
+        event.preventDefault(); //ce code empêche le comportement par défaut du formulaire, qui serait de recharger la page lorsque le bouton de soumission est cliqué. 
+        //Cela permet au code JavaScript de gérer la soumission du formulaire sans rechargement de la page.
 
         console.log('Étape 1 : Soumission du formulaire');
         const email = document.querySelector('#email').value;
         const password = document.querySelector('#password').value;
 
-        //stocke les informations d'identification
+        //stocke les informations d'identification requestData est créé pour contenir les informations d'identification de l'utilisateur (email et mot de passe). il sera converti en format JSON pour l'envoyer à l'API.
         const requestData = {
             email: email,
             password: password
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(requestData)
         })
+            // les then sont utilisés pour gérer la réponse de l'API en cas de succès 
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -48,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorElement.style.display = 'block';
                 }
             })
+            //pour gérer les erreurs
             .catch(error => {
                 console.error('Une erreur s\'est produite lors de l\'authentification :', error);
                 // Affichage du message d'erreur
@@ -56,4 +59,3 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorElement.style.display = 'block';
             });
     });
-});
