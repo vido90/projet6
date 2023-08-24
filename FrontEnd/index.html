@@ -17,7 +17,7 @@
 
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="../index.html">projets</a></li>
@@ -33,15 +33,115 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<i class="fa-solid fa-pen-to-square"></i>
 			<a href="#modal1" class="js-modal">modifier</a>
 				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
 					<div class="modal-wrapper js-modal-stop">
-						<a href="#modale" class="js-modal-close">
+						<a href="#modal1" class="js-modal-close">
 							<i class="fas fa-times"></i>
 						</a>
 						<h3 id="titlemodal">Galerie Photo</h3>
-					</div>
-				</aside>
+						<div class="image-gallery"></div>
+						<hr class="separator">
+						<a href="#modal2" class="js-admin-projets custom-link" data-modal-target="#modal2">Ajouter un projet</a>
+						<a class="btn-clear-admin" href="#">Supprimer la galerie</a>
+							<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal2" style="display: none;">
+								<div class="modal-wrapper js-modal-stop">
+									<div class="modale-projet-logo">
+										<a href="" class="js-modale-return">
+											<i class="fa-solid fa-arrow-left"></i>
+										</a>
+
+										<a href="#" class="js-modal-close">
+											<i class="fas fa-times"></i>
+										</a>
+									</div>
+									
+									<h3 id="titlemodal2">Ajout photo</h3>
+									<div class="modal-content">
+										<div class="add-photo-content">
+											<div class="empty-image">
+												<img src="./assets/icons/picture-svgrepo-com 1.png" alt="Placeholder">
+												
+											<button class="add-photo-button">+ Ajouter photo</button>
+											<input  accept=".png" type="file" name="file" id="file" class="add-photo-input">
+											<p>jpg, png: 4mo max</p>
+											</div>
+											
+										</div>
+										<div class="form-group-title">
+											<label for="titre">Titre</label>
+											<input class="js-title" type="text" name="titre" id="titre">
+										</div>
+										<div class="form-group-id">
+											<label for="categorie">Catégorie</label>
+											<select name="categorie" id="categorie" class="js-categoryId">
+												<option value="0"></option>
+												<option value="1">Objets</option>
+												<option value="2">Appartements</option>
+												<option value="3">Hôtels & restaurants</option>
+											</select>
+										</div>
+										<hr class="separator">
+										<input type="submit" class="js-add-work" value="Valider">
+									</div>
+								</div>
+							</aside>
+							<aside id="modal3" class="modal" aria-hidden="true" role="dialog" style="display: none;">
+								<div class="modal-wrapper js-modal-stop">
+									<div class="third-modal-content">
+										<div class="third-modal-image-container">
+											<img src="#" alt="Nouvelle photo" id="thirdModalImage" class="third-modal-image">
+										</div>
+										<div class="new-photo-details">
+											<div class="form-group">
+												<label for="newPhotoTitle">Titre</label>
+												<input type="text" id="newPhotoTitle">
+											</div>
+											<div class="form-group">
+												<label for="newPhotoCategory">Catégorie</label>
+                    							<select id="newPhotoCategory">
+													<option value="0"></option>
+                        							<option value="1">Objets</option>
+                        							<option value="2">Appartements</option>
+                        							<option value="3">Hôtels & restaurants</option>
+												</select>
+											</div>
+											<button id="validerPhoto" class="valider-button">Valider</button>
+										</div>
+									</div>
+									
+										<a href="#" class="js-modale-return">
+											<i class="fa-solid fa-arrow-left"></i>
+										</a>
+
+										<a href="#" class="js-modal-close">
+											<i class="fas fa-times"></i>
+										</a>
+									</div>
+									<h3 id="titlemodal3">Ajout photo</h3>
+									<div class="new-photo-content">
+										<div class="new-photo-preview">
+											<img src="#" alt="Nouvelle photo" id="newPhotoPreview">
+										</div>
+										<div class="new-photo-details">
+											<div class="form-group">
+												<label for="newPhotoTitle">Titre</label>
+												<input type="text" id="newPhotoTitle">
+											</div>
+											<div class="form-group">
+												<label for="newPhotoCategory">Catégorie</label>
+												<select id="newPhotoCategory">
+													<option value="1">Objets</option>
+													<option value="2">Appartements</option>
+													<option value="3">Hôtels & restaurants</option>
+												</select>
+											</div>
+											<button id="validerPhoto">Valider</button>
+										</div>
+									</div>	
+								</div>
+							</aside>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -53,17 +153,9 @@
 	<section id="portfolio">
 		<div class="header">
 			<h2>Mes Projets</h2>
+			<i class="fa-solid fa-pen-to-square"></i>
 			<a href="#modal1" class="js-modal">modifier</a>
-				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
-					<div class="modal-wrapper">
-						<h3 id="titlemodal">Galerie Photo</h3>
-							<div class="js-admin-projets">
-								<div class="image-gallery"></div>
-							</div>
-						<a href="modalProjet" class="js-admin-projets">Ajouter un projet</a>
-						<a class="btn-clear-admin" href="#">Supprimer la galerie</a>
-					</div>
-				</aside>
+			
 		</div>
 		
 		<div class="category-buttons">

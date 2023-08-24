@@ -15,6 +15,9 @@ const buildHtml = (projet)=>{
         figure.appendChild(image);
         figure.appendChild(figcaption); 
         gallery.appendChild(figure);
+        figure.setAttribute('id', 'p-' +projet[i].id)
+
+     
 
     }  
 }
@@ -146,7 +149,7 @@ const openModal = function (e) {
     modal = document.querySelector(e.target.getAttribute('href'))
     focusables = Array.from(modal.querySelectorAll(focusableSelector))
     previouslyFocusedElement = document.querySelector(":focus");
-
+    
     modal.style.display = null;
     focusables[0].focus();
     modal.removeAttribute('aria-hiden');
@@ -235,4 +238,187 @@ function adminPanel() {
         }
     });
 }
+
+
+//afficher les images
+async function afficherImagesPortfolio() {
+    const response = await fetch('http://localhost:5678/api/works'); // Récupérer les données des travaux
+    const data = await response.json(); // Convertir la réponse en JSON
+    const imageGallery = document.querySelector('.image-gallery'); // Sélectionner la div pour les images
+
+    // Parcourir les données et afficher les images
+    data.forEach(work => {
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('image-container'); // Ajoutez une classe pour cibler le conteneur
+        imgContainer.setAttribute('id',work.id); // Permet d'identifier chaque image du portofolio
+
+        const img = document.createElement('img');
+        img.src = work.imageUrl;
+        img.alt = work.title;
+
+        const moveIcon = document.createElement('i');
+        moveIcon.classList.add('fas', 'fa-arrows-alt');
+
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fas', 'fa-trash', 'delete-icon'); // Classe pour l'icône de suppression
+        deleteIcon.addEventListener('click', () => {
+            //const elementId = deleteIcon.dataset.id; // Récupérez l'identifiant de l'élément
+            handleDeleteClick(work.id);
+        });
+
+        const editText = document.createElement('p');
+        editText.textContent = 'éditer'; // Texte "éditer"
+        editText.classList.add('edit-text');
+        
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(deleteIcon);
+        imgContainer.appendChild(moveIcon)
+        imgContainer.appendChild(editText); // Ajout du texte "éditer"
+
+        imageGallery.appendChild(imgContainer);
+
+
+    });
+
+    
+}
+
+afficherImagesPortfolio();
+
+
+function handleDeleteClick(elementId) {
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+
+    if (confirmation) {
+        const token = localStorage.getItem('token');
+        fetch(`http://localhost:5678/api/works/${elementId}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json",
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                // Supprimer l'élément du DOM après la suppression réussie
+                const elementToDelete = document.getElementById(elementId);
+                const projetToDelete = document.getElementById('p-' +elementId);
+
+                if (elementToDelete) {
+                    elementToDelete.remove();
+                    projetToDelete.remove();
+                }
+                
+            } else {
+                console.error('Erreur lors de la suppression de l\'élément');
+            }
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite lors de la suppression :', error);
+        });
+    }
+}
+
+// Sélectionne le lien "Ajouter un projet"
+const addProjectLink = document.querySelector('.js-admin-projets');
+
+// Sélectionne la deuxième fenêtre modale
+const secondModal = document.querySelector('#modal2');
+
+// Gestionnaire d'événement pour ouvrir la deuxième fenêtre modale
+addProjectLink.addEventListener('click', (event) => {
+    event.preventDefault(); // Empêche le comportement de lien par défaut
+    secondModal.style.display = 'block'; // Affiche la deuxième modale
+});
+
+
+  //gestion du bouton left et close 
+  document.addEventListener("DOMContentLoaded", function () {
+    const returnToFirstModalLink = document.querySelector('.js-modale-return');
+    const firstModal = document.querySelector('#modal1');
+    const secondModal = document.querySelector('#modal2');
+    const thirdModal = document.querySelcetor('#modal3');
+
+    returnToFirstModalLink.addEventListener('click', (event) => {
+        event.preventDefault(); // Empêche le comportement de lien par défaut
+        thirdModal.style.display = 'none'; // cache la troisième modale
+        secondModal.style.display = 'none'; // Cache la deuxième modale
+        firstModal.style.display = 'block'; // Affiche la première modale
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const addPhotoButton = document.querySelector('.add-photo-button');
+    const addPhotoInput = document.querySelector('.add-photo-input');
+    const secondModal = document.querySelector('#modal2');
+    const emptyImage = document.querySelector('.empty-image img');
+    const maxFileSizeText = document.querySelector('.empty-image p');
+
+    // Ajoute un gestionnaire d'événements pour le clic sur le bouton "Ajouter photo"
+    addPhotoButton.addEventListener('click', () => {
+        addPhotoInput.click();
+    });
+
+    // Ajoute un gestionnaire d'événements pour la modification de l'élément input 
+    addPhotoInput.addEventListener('change', (event) => {
+        const selectedFile = event.target.files[0];
+
+        if (selectedFile) {
+            const imageUrl = URL.createObjectURL(selectedFile);
+            emptyImage.src = imageUrl;
+
+            // Cacher le bouton "Ajouter photo" et le texte "jpg, png: 4mo max" dans la deuxième modale
+            addPhotoButton.style.display = 'none';
+            maxFileSizeText.style.display = 'none';
+
+            // Afficher la deuxième modale après avoir inséré l'image
+            secondModal.style.display = 'block';
+        }
+    });
+
+    // ... Autres gestionnaires d'événements ici ...
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const newPhotoTitle = document.querySelector('#newPhotoTitle');
+    const newPhotoCategory = document.querySelector('#newPhotoCategory');
+    const validerPhotoButton = document.querySelector('#validerPhoto');
+    const thirdModal = document.querySelector('#modal3');
+    const galleryContainer = document.querySelector('.gallery'); // Remplacez par le bon sélecteur pour votre galerie
+
+
+    newPhotoTitle.addEventListener('input', updateValiderButtonState);
+    newPhotoCategory.addEventListener('change', updateValiderButtonState);
+
+    validerPhotoButton.addEventListener('click', () => {
+        if (validerPhotoButton.classList.contains('green-button')) {
+            // Créer un nouvel élément d'image
+            const newImage = document.createElement('img');
+            newImage.src = newPhotoPreview.src;
+            newImage.alt = newPhotoTitle.value;
+
+            // Ajouter l'image à la galerie
+            galleryContainer.appendChild(newImage);
+
+            // Fermer la troisième modale
+            thirdModal.style.display = 'none';
+        }
+    });
+
+    function updateValiderButtonState() {
+        if (newPhotoTitle.value.trim() !== '' && newPhotoCategory.value !== '0') {
+            validerPhotoButton.classList.add('green-button');
+        } else {
+            validerPhotoButton.classList.remove('green-button');
+        }
+    }
+
+    
+});
+
+
+
+
+
+
 
