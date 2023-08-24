@@ -375,8 +375,6 @@ document.addEventListener("DOMContentLoaded", function () {
             secondModal.style.display = 'block';
         }
     });
-
-    // ... Autres gestionnaires d'événements ici ...
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -414,6 +412,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     
+});
+
+// Gestion de login et logout 
+document.addEventListener("DOMContentLoaded", function () {
+    const loginLink = document.querySelector('.js-alredy-logged'); // Remplacer par le sélecteur correct pour le lien de connexion
+
+    //logique de détection de l'état de connexion ici
+    const isConnected = true; // Changer cette valeur en fonction de l'état de connexion
+
+    if (isConnected) {
+        loginLink.textContent = 'Logout';
+    }
 });
 
 
