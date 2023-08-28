@@ -13,7 +13,15 @@
 	
 </head>
 
-
+<aside class="admin__rod admin__modifer" aria-hidden="true" style="display: none;">
+	<div class="admin__modifer">
+		<i class="fa-solid fa-pen-to-square mode-edition-icon"></i>
+		<p>Mode édition</p>
+	</div>
+	<a href="../FrontEnd/assets/login.html">
+		<button>Publier les changements</button>
+	</a>
+</aside>
 
 <body>
 <header>
@@ -33,8 +41,8 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
-			<i class="fa-solid fa-pen-to-square"></i>
-			<a href="#modal1" class="js-modal">modifier</a>
+			<i class="fa-solid fa-pen-to-square edit-icon"></i>
+			<a href="#modal1" class="js-modal header">modifier</a>
 				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
 					<div class="modal-wrapper js-modal-stop">
 						<a href="#modal1" class="js-modal-close">
@@ -87,61 +95,6 @@
 									</div>
 								</div>
 							</aside>
-							<aside id="modal3" class="modal" aria-hidden="true" role="dialog" style="display: none;">
-								<div class="modal-wrapper js-modal-stop">
-									<div class="third-modal-content">
-										<div class="third-modal-image-container">
-											<img src="#" alt="Nouvelle photo" id="thirdModalImage" class="third-modal-image">
-										</div>
-										<div class="new-photo-details">
-											<div class="form-group">
-												<label for="newPhotoTitle">Titre</label>
-												<input type="text" id="newPhotoTitle">
-											</div>
-											<div class="form-group">
-												<label for="newPhotoCategory">Catégorie</label>
-                    							<select id="newPhotoCategory">
-													<option value="0"></option>
-                        							<option value="1">Objets</option>
-                        							<option value="2">Appartements</option>
-                        							<option value="3">Hôtels & restaurants</option>
-												</select>
-											</div>
-											<button id="validerPhoto" class="valider-button">Valider</button>
-										</div>
-									</div>
-									
-										<a href="#" class="js-modale-return">
-											<i class="fa-solid fa-arrow-left"></i>
-										</a>
-
-										<a href="#" class="js-modal-close">
-											<i class="fas fa-times"></i>
-										</a>
-									</div>
-									<h3 id="titlemodal3">Ajout photo</h3>
-									<div class="new-photo-content">
-										<div class="new-photo-preview">
-											<img src="#" alt="Nouvelle photo" id="newPhotoPreview">
-										</div>
-										<div class="new-photo-details">
-											<div class="form-group">
-												<label for="newPhotoTitle">Titre</label>
-												<input type="text" id="newPhotoTitle">
-											</div>
-											<div class="form-group">
-												<label for="newPhotoCategory">Catégorie</label>
-												<select id="newPhotoCategory">
-													<option value="1">Objets</option>
-													<option value="2">Appartements</option>
-													<option value="3">Hôtels & restaurants</option>
-												</select>
-											</div>
-											<button id="validerPhoto">Valider</button>
-										</div>
-									</div>	
-								</div>
-							</aside>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -153,7 +106,7 @@
 	<section id="portfolio">
 		<div class="header">
 			<h2>Mes Projets</h2>
-			<i class="fa-solid fa-pen-to-square"></i>
+			<i class="fa-solid fa-pen-to-square edit-icon"></i>
 			<a href="#modal1" class="js-modal">modifier</a>
 			
 		</div>

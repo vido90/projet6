@@ -83,7 +83,8 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+	padding-right: 10px;
 }
 
 #portfolio {
@@ -153,7 +154,7 @@ a:hover {
 #introduction img {
 	display: block;
 	margin: auto;
-	width: 60%;
+	width: 80%;
 }
 
 #introduction article {
@@ -369,8 +370,14 @@ footer nav ul {
 	display: inline-flex;
 	text-decoration: none;
 	color: black;
-	padding: 20px;
-	
+	padding: 5px;	
+}
+
+.js-modal.header {
+	display: inline-flex;
+	text-decoration: none;
+	color: black;
+	padding: 5px;
 }
 .js-modal-close {
 	position: absolute;
@@ -474,11 +481,11 @@ footer nav ul {
 .delete-icon {
 	position: absolute;
 	top: 5px;
-	right: 15px;
-	font-size: 10px;
+	right: 10px;
+	font-size: 5px;
 	color: white;
 	background-color: black;
-	padding: 5px;
+	padding: 3px;
 	border-radius: 20%;
 	cursor: pointer;
 }
@@ -486,16 +493,16 @@ footer nav ul {
 .fa-arrows-alt {
     position: absolute;
     top: 5px;
-    right: 40px;
-    font-size: 10px;
+    right: 25px;
+    font-size: 5px;
     color: white; /* Couleur de l'icône */
 	background-color: black;
-	padding: 5px;
+	padding: 3px;
 	border-radius: 20%;
 	cursor: pointer;
 }
 
-.fa-solid.fa-pen-to-square {
+.fa-solid.fa-pen-to-square.edit-icon {
 	position: relative;
 	font-size: 10px;
 	color: black;
@@ -633,7 +640,6 @@ input.js-add-work {
 	border: none;
 	width: 237px;
 	height: 36px;
-	
 }
 
 
@@ -647,15 +653,49 @@ input.js-add-work {
 
 }
 
-.third-modal-image-container {
-    max-width: 100%; /* La largeur maximale que l'image peut avoir */
-    max-height: 70vh; /* La hauteur maximale que l'image peut avoir, en fonction de la hauteur de la vue */
-    margin: 0 auto; /* Centrer l'image horizontalement */
+.green-button {
+    background-color: #1D6154 !important;
+    color: white;
 }
 
-.green-button {
-    background-color: green;
+.admin__modifer {
+    background-color: black;
     color: white;
+    display: flex;
+    align-items: center;
+	justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box; /* Assure que les bordures et le padding sont inclus dans la largeur */
+	text-align: center; /* Centrer le texte horizontalement */
+}
+
+.admin__modifer i {
+    margin-right: 10px;
+    color: white; /* Couleur blanche pour l'icône crayon */
+}
+
+.admin__modifer p {
+    margin: 0; /* Supprime les marges par défaut */
+}
+
+.admin__modifer button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+	border-radius: 30px;
+	margin-left: 5px;
+	white-space: nowrap;
+}
+
+.fa-solid.fa-pen-to-square.mode-edition-icon {
+	position: relative;
+	font-size: 10px;
+	color: white;
+	justify-content: center;
 }
 
 

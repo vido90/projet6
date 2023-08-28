@@ -126,19 +126,6 @@ const getCategories = async() => {
 getAllWorks()
 getCategories()
 
-/* // bouton modifier
-/* const token = localStorage.getItem('token');
-if (token === null) {
-    
-    /* document.getElementById("edit1").style.display="none" */
-
-/* else {
-    /* document.getElementById("edit1").style.display="flex" */
-
-/* console.log(token) */ 
-
-// creation de la modale
-
 let modal = null
 const focusableSelector = "button, a, input, textarea"
 let focusables = []
@@ -167,16 +154,14 @@ const openModal = function (e) {
 const closeModal = function (e) {
     if (modal === null) return 
     e.preventDefault()
-    window.setTimeout(function () {
-        modal.style.display = "none"
-        modal = null
-    }, 500)
-    modal.style.display = "none";
+   
+    
     modal.setAttribute('aria-hiden', 'true') /*l'element doit être masqué*/
     modal.removeAttribute('aria-modal')
     modal.removeEventListener('click', closeModal)
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
+    modal.style.display = "none";
     modal = null
 
 }
@@ -285,7 +270,7 @@ async function afficherImagesPortfolio() {
 
 afficherImagesPortfolio();
 
-
+//Pour supprimer les images dans la modale 
 function handleDeleteClick(elementId) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
 
@@ -337,11 +322,9 @@ addProjectLink.addEventListener('click', (event) => {
     const returnToFirstModalLink = document.querySelector('.js-modale-return');
     const firstModal = document.querySelector('#modal1');
     const secondModal = document.querySelector('#modal2');
-    const thirdModal = document.querySelcetor('#modal3');
 
     returnToFirstModalLink.addEventListener('click', (event) => {
         event.preventDefault(); // Empêche le comportement de lien par défaut
-        thirdModal.style.display = 'none'; // cache la troisième modale
         secondModal.style.display = 'none'; // Cache la deuxième modale
         firstModal.style.display = 'block'; // Affiche la première modale
     });
@@ -367,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const imageUrl = URL.createObjectURL(selectedFile);
             emptyImage.src = imageUrl;
 
-            // Cacher le bouton "Ajouter photo" et le texte "jpg, png: 4mo max" dans la deuxième modale
+            // Cache le bouton "Ajouter photo" et le texte "jpg, png: 4mo max" dans la deuxième modale
             addPhotoButton.style.display = 'none';
             maxFileSizeText.style.display = 'none';
 
@@ -375,47 +358,49 @@ document.addEventListener("DOMContentLoaded", function () {
             secondModal.style.display = 'block';
         }
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    const newPhotoTitle = document.querySelector('#newPhotoTitle');
-    const newPhotoCategory = document.querySelector('#newPhotoCategory');
-    const validerPhotoButton = document.querySelector('#validerPhoto');
-    const thirdModal = document.querySelector('#modal3');
-    const galleryContainer = document.querySelector('.gallery'); // Remplacez par le bon sélecteur pour votre galerie
+    //gestion d'ajout de photo et bouton valider 
 
-
-    newPhotoTitle.addEventListener('input', updateValiderButtonState);
-    newPhotoCategory.addEventListener('change', updateValiderButtonState);
-
-    validerPhotoButton.addEventListener('click', () => {
-        if (validerPhotoButton.classList.contains('green-button')) {
-            // Créer un nouvel élément d'image
-            const newImage = document.createElement('img');
-            newImage.src = newPhotoPreview.src;
-            newImage.alt = newPhotoTitle.value;
-
-            // Ajouter l'image à la galerie
-            galleryContainer.appendChild(newImage);
-
-            // Fermer la troisième modale
-            thirdModal.style.display = 'none';
-        }
-    });
+    const title = document.querySelector('#titre');
+    const category = document.querySelector('#categorie');
+    const validerPhotoButton = document.querySelector('#modal2 .js-add-work');
+    const modal = document.querySelector('#modal2');
+    const galleryContainer = document.querySelector('.gallery'); //Portfolio
+    const imgContainer = document.querySelector('.image-gallery');
+    const newPhotoPreview = document.querySelector('.empty-image img');
 
     function updateValiderButtonState() {
-        if (newPhotoTitle.value.trim() !== '' && newPhotoCategory.value !== '0') {
+        console.log("Title", title.value.trim());
+        console.log("Category", category.value);
+
+        if (title.value.trim() !== '' && category.value !== '0') {
             validerPhotoButton.classList.add('green-button');
         } else {
             validerPhotoButton.classList.remove('green-button');
         }
     }
 
-    
-});
+    title.addEventListener('input', updateValiderButtonState);
+    category.addEventListener('change', updateValiderButtonState);
 
-// Gestion de login et logout 
-document.addEventListener("DOMContentLoaded", function () {
+    validerPhotoButton.addEventListener('click', () => {
+        if (validerPhotoButton.classList.contains('green-button')) {
+            // Créer un nouvel élément d'image
+            const newImage = document.createElement('img');
+            newImage.src = newPhotoPreview.src;
+            newImage.alt = title.value;
+
+            // Ajouter l'image à la galerie
+            galleryContainer.appendChild(newImage);
+            imgContainer.appendChild(newImage);
+
+
+            // Fermer la troisième modale
+            modal.style.display = 'none';
+        }
+    }); 
+
+    // Gestion de login et logout 
     const loginLink = document.querySelector('.js-alredy-logged'); // Remplacer par le sélecteur correct pour le lien de connexion
 
     //logique de détection de l'état de connexion ici
@@ -424,7 +409,49 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isConnected) {
         loginLink.textContent = 'Logout';
     }
+
+    //Mode edition 
+    const editModeBlock = document.querySelector('.admin__rod.admin__modifer'); // Sélecteur pour le bloc de mode édition
+    const publishChangesButton = document.querySelector('.admin__modifer button'); // Sélecteur pour le bouton "Publier les changements"
+    const editableElements = document.querySelectorAll('.editable'); // Ajoutez la classe 'editable' aux éléments que vous voulez rendre éditables
+
+    let isEditMode = false;
+
+    editModeBlock.addEventListener('click', () => {
+        isEditMode = !isEditMode;
+
+        if (isEditMode) {
+            enableEditMode();
+            editModeBlock.classList.add('editing');
+        } else {
+            disableEditMode();
+            editModeBlock.classList.remove('editing');
+        }
+    });
+
+    function enableEditMode() {
+        editableElements.forEach(element => {
+            element.contentEditable = true;
+        });
+    }
+
+    function disableEditMode() {
+        editableElements.forEach(element => {
+            element.contentEditable = false;
+        });
+    }
+
+    publishChangesButton.addEventListener('click', () => {
+        if (isEditMode) {
+            // Appliquer le code pour publier les changements (par exemple, sauvegarder les données modifiées)
+            // Réinitialiser le mode d'édition
+            isEditMode = false;
+            disableEditMode();
+            editModeBlock.classList.remove('editing');
+        }
+    });
 });
+
 
 
 
