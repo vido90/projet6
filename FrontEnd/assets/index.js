@@ -163,6 +163,7 @@ const closeModal = function (e) {
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
     modal.style.display = "none";
     modal = null
+    
 
 }
 //// Définit la "border" du click pour fermer la modale
@@ -194,32 +195,46 @@ document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModal)   
 })
 
-// Ferme la modale avec la touche echap
-window.addEventListener('keydown', function (e) {
-    if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e)
-    }
-    if(e.key === "Tab" && modal !== null) {
-        focusInModal(e)
-    }
-})
-
 //récupération du token 
 const token = localStorage.getItem('token');
 const AlredyLogged = document.querySelector(".js-alredy-logged");
+/* const btnEdit2 = document.querySelector("#btnedit2"); //Si c'est un id cest hashtag*/
+
+function logout() {
+    localStorage.removeItem('token'); // Supprimer le token de l'utilisateur
+    
+    window.location.href = './index.html'; // Rediriger vers la page d'accueil
+}
+
+ // Gestionnaire d'événements pour le bouton "Logout"
+ AlredyLogged.addEventListener('click', logout);
+
+
 
 adminPanel()
 
 // Gestion de l'affichage des boutons admin
 function adminPanel() {
+    const editButtons = document.querySelectorAll(".edit-buttons");
     document.querySelectorAll(".admin__modifer").forEach(a => {
-        if (token === null) {
+        if (token === null || AlredyLogged.innerHTML === "login") {
+            editButtons.forEach(button => {
+                button.style.display = "none";
+            });
+
+            AlredyLogged.removeEventListener('click', logout);
+            
             return;
         }
         else {
+            editButtons.forEach(button => {
+                button.style.display = "block";
+            });
             a.removeAttribute("aria-hidden")
             a.removeAttribute("style")
             AlredyLogged.innerHTML = "logout";
+            AlredyLogged.addEventListener('click', logout);
+            
         }
     });
 }
@@ -326,7 +341,7 @@ addProjectLink.addEventListener('click', (event) => {
     returnToFirstModalLink.addEventListener('click', (event) => {
         event.preventDefault(); // Empêche le comportement de lien par défaut
         secondModal.style.display = 'none'; // Cache la deuxième modale
-        firstModal.style.display = 'block'; // Affiche la première modale
+        firstModal.style.display = 'flex'; // Affiche la première modale
     });
 });
 
@@ -336,10 +351,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const secondModal = document.querySelector('#modal2');
     const emptyImage = document.querySelector('.empty-image img');
     const maxFileSizeText = document.querySelector('.empty-image p');
+    const closeModal2 = document.querySelector('#btnedit2');
 
     // Ajoute un gestionnaire d'événements pour le clic sur le bouton "Ajouter photo"
     addPhotoButton.addEventListener('click', () => {
         addPhotoInput.click();
+    });
+
+     // Ajoute un gestionnaire d'événements pour le clic sur le bouton "close" de la 2e modale
+     closeModal2.addEventListener('click', () => {
+        secondModal.style.display = "none";
+
     });
 
     // Ajoute un gestionnaire d'événements pour la modification de l'élément input 
@@ -385,6 +407,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     validerPhotoButton.addEventListener('click', () => {
         if (validerPhotoButton.classList.contains('green-button')) {
+            
             // Créer un nouvel élément d'image
             const newImage = document.createElement('img');
             newImage.src = newPhotoPreview.src;
@@ -393,23 +416,43 @@ document.addEventListener("DOMContentLoaded", function () {
             // Ajouter l'image à la galerie
             galleryContainer.appendChild(newImage);
             imgContainer.appendChild(newImage);
+            
+            // les données à envoyer au serveur
+            const formData = new FormData();
+            formData.append('imageUrl', newImage.src);
+            formData.append('title', document.getElementById('titre').value);
+            formData.append('categoryId', document.getElementById('categorie').value);
 
+             // Enregistrement des données dans la base de données
+            fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            body: formData
+            })
+
+            .then(response => response.json())
+            .then(result => {
+                console.log('Réponse du serveur:', result)
+
+                
+
+                // Mettre à jour la galerie dans la première modale en créant un nouvel élément figure
+                const newFigure = document.createElement('figure');
+                const newFigureImage = document.createElement('img');
+                newFigureImage.src = newImage.src;
+                newFigureImage.alt = title.value;
+                newFigure.appendChild(newFigureImage);
+                gallery.appendChild(newFigure);
+            });
+
+
+            
 
             // Fermer la troisième modale
             modal.style.display = 'none';
         }
     }); 
 
-    // Gestion de login et logout 
-    const loginLink = document.querySelector('.js-alredy-logged'); // Remplacer par le sélecteur correct pour le lien de connexion
-
-    //logique de détection de l'état de connexion ici
-    const isConnected = true; // Changer cette valeur en fonction de l'état de connexion
-
-    if (isConnected) {
-        loginLink.textContent = 'Logout';
-    }
-
+   
     //Mode edition 
     const editModeBlock = document.querySelector('.admin__rod.admin__modifer'); // Sélecteur pour le bloc de mode édition
     const publishChangesButton = document.querySelector('.admin__modifer button'); // Sélecteur pour le bouton "Publier les changements"

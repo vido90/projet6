@@ -79,7 +79,7 @@ h1 > span {
 }
 
 h2{
-	display: inline-block;
+	
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
@@ -310,6 +310,7 @@ footer nav ul {
 	height: 36px;
 	background: #1D6154;
 	border-radius: 60px;
+	border: none;
 }
 
 #login p {
@@ -359,26 +360,24 @@ footer nav ul {
 
 .modal-wrapper{
 	width: 500px;
-	max-width: calc(100vw - 20px);
-	max-height: calc(100vh - 20px);
 	padding: 20px;
 	background: #fff;
 	animation: slideFromTop .3s both .1s;
 }
 
-.js-modal {
-	display: inline-flex;
-	text-decoration: none;
-	color: black;
-	padding: 5px;	
+.edit-icon {
+    font-size: 16px;
 }
 
-.js-modal.header {
-	display: inline-flex;
+
+.js-modal.header.edit-buttons {
 	text-decoration: none;
-	color: black;
-	padding: 5px;
+    margin-right: 250px;
+    margin-top: -27px;
+    color: black;
+    padding: 5px;
 }
+
 .js-modal-close {
 	position: absolute;
     top: 10px; 
@@ -504,9 +503,18 @@ footer nav ul {
 
 .fa-solid.fa-pen-to-square.edit-icon {
 	position: relative;
+	margin-left: 40px;
+    padding: 10px;
 	font-size: 10px;
 	color: black;
 	justify-content: center;
+}
+
+.js-modal.portfolio.edit-buttons {
+	display: inline-flex;
+	text-decoration: none;
+	color: black;
+	padding: 5px;
 }
 
 .gallery__item-modale {
@@ -526,14 +534,21 @@ footer nav ul {
 
 /*style pour la 2e modale*/
 
+#modal2.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .add-photo-content {
+	object-fit: contain;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	border-radius: 10px;
 	background-color: #E8F1F6;
-	height: 150px;
+	
 	padding: 20px;
 	margin-left: 60px;
 	margin-right: 60px;
@@ -550,14 +565,13 @@ footer nav ul {
 }
 .empty-image {
 	text-align: center;
+	width: 220px;
 
   }
 
   .empty-image img {
-	width: 58px;
-	height: auto;
+	width: 150px;
 	margin: 0 auto;
-
 	margin-bottom: 10px;
   }
 
