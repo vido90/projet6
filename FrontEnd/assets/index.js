@@ -418,17 +418,21 @@ document.addEventListener("DOMContentLoaded", function () {
             imgContainer.appendChild(newImage);
             
             // les données à envoyer au serveur
-            const formData = new FormData();
-            formData.append('imageUrl', newImage.src);
+            const formData = new FormData();          
+            formData.append('image', document.getElementById('file').files[0]);
             formData.append('title', document.getElementById('titre').value);
-            formData.append('categoryId', document.getElementById('categorie').value);
-
+            formData.append('category', document.getElementById('categorie').value);           
              // Enregistrement des données dans la base de données
-            fetch('http://localhost:5678/api/works', {
+            const token = localStorage.getItem('token');
+            console.log(formData);
+            fetch(`http://localhost:5678/api/works`, {
             method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json",
+            },            
             body: formData
             })
-
             .then(response => response.json())
             .then(result => {
                 console.log('Réponse du serveur:', result)
