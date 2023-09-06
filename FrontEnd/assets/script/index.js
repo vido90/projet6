@@ -406,12 +406,36 @@ document.addEventListener("DOMContentLoaded", function () {
     category.addEventListener('change', updateValiderButtonState);
 
     validerPhotoButton.addEventListener('click', () => {
-        if (validerPhotoButton.classList.contains('green-button')) {
+        const hasSelectedImage = newPhotoPreview.src !== '';
+
+        if (validerPhotoButton.classList.contains('green-button') && hasSelectedImage) {
             
             // Créer un nouvel élément d'image
             const newImage = document.createElement('img');
             newImage.src = newPhotoPreview.src;
             newImage.alt = title.value;
+
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('image-container');
+
+            const deleteIcon = document.createElement('i');
+            deleteIcon.classList.add('fas', 'fa-trash', 'delete-icon');
+            deleteIcon.addEventListener('click', () => {
+                // Gérer la suppression de l'image ici
+                imgContainer.remove();
+            });
+
+            const moveIcon = document.createElement('i');
+            moveIcon.classList.add('fas', 'fa-arrows-alt');
+
+            const editText = document.createElement('p');
+            editText.textContent = 'Éditer';
+            editText.classList.add('edit-text');
+
+            imgContainer.appendChild(newImage);
+            imgContainer.appendChild(deleteIcon);
+            imgContainer.appendChild(moveIcon);
+            imgContainer.appendChild(editText);
 
             // Ajouter l'image à la galerie
             galleryContainer.appendChild(newImage);
@@ -435,7 +459,9 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(result => {
-                console.log('Réponse du serveur:', result)
+                // ... Votre code pour obtenir l'URL de l'image et le texte alternatif
+                const imageUrl = result.imageUrl; // Supposons que l'URL de l'image provienne de la réponse du serveur
+                const altText = title.value; // Supposons que le texte alternatif provienne de la valeur du titre
 
                 
 
@@ -447,9 +473,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 newFigure.appendChild(newFigureImage);
                 gallery.appendChild(newFigure);
             });
-
-
-            
+             
 
             // Fermer la troisième modale
             modal.style.display = 'none';
