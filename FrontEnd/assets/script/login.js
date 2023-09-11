@@ -41,7 +41,7 @@
                     console.log('Authentification réussie');
                     // Stockage du jeton dans le local storage ou dans une variable selon vos besoins
                     localStorage.setItem('token', data.token);
-                    window.location.href = '../index.html';
+                    window.location.href = '../FrontEnd/index.html';
                 } else {
                     console.log('Erreur d\'authentification');
                     // Affichage du message d'erreur

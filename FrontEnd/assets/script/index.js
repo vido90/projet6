@@ -203,7 +203,7 @@ const AlredyLogged = document.querySelector(".js-alredy-logged");
 function logout() {
     localStorage.removeItem('token'); // Supprimer le token de l'utilisateur
     
-    window.location.href = './index.html'; // Rediriger vers la page d'accueil
+    window.location.href = '../FrontEnd/index.html'; // Rediriger vers la page d'accueil
 }
 
  // Gestionnaire d'événements pour le bouton "Logout"
